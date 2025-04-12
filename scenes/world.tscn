@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=4 uid="uid://q2nj2lolxv4r"]
+[gd_scene load_steps=15 format=4 uid="uid://q2nj2lolxv4r"]
 
-[ext_resource type="Texture2D" uid="uid://cjajf27djvhbq" path="res://assets/tileset/Grass_Middle.png" id="1_k0juu"]
+[ext_resource type="Texture2D" uid="uid://cjajf27djvhbq" path="res://assets/tileset/grass_middle.png" id="1_k0juu"]
 [ext_resource type="PackedScene" uid="uid://w6dng65fdvd" path="res://scenes/player.tscn" id="1_nnsk1"]
-[ext_resource type="Texture2D" uid="uid://po32g8gly0ut" path="res://assets/tileset/Path_Tile.png" id="2_71j4m"]
-[ext_resource type="Texture2D" uid="uid://myecmjqxu03h" path="res://assets/tileset/Path_Middle.png" id="3_qfnet"]
-[ext_resource type="Texture2D" uid="uid://bjl064xds2bpg" path="res://assets/tileset/Water_Tile.png" id="4_i7141"]
+[ext_resource type="Texture2D" uid="uid://po32g8gly0ut" path="res://assets/tileset/path_tile.png" id="2_71j4m"]
+[ext_resource type="Texture2D" uid="uid://myecmjqxu03h" path="res://assets/tileset/path_middle.png" id="3_qfnet"]
+[ext_resource type="Texture2D" uid="uid://bjl064xds2bpg" path="res://assets/tileset/water_tile.png" id="4_i7141"]
 [ext_resource type="PackedScene" uid="uid://18t321xkjcw1" path="res://scenes/tree.tscn" id="5_71j4m"]
+[ext_resource type="PackedScene" uid="uid://t8p1b2g8ai87" path="res://scenes/enemy.tscn" id="7_i7141"]
+[ext_resource type="PackedScene" uid="uid://buy87jaswwvjh" path="res://scenes/enemy_path_follow.tscn" id="8_4mrxx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i7141"]
 texture = ExtResource("1_k0juu")
@@ -69,7 +71,13 @@ sources/1 = SubResource("TileSetAtlasSource_4mrxx")
 sources/2 = SubResource("TileSetAtlasSource_7r4gi")
 sources/3 = SubResource("TileSetAtlasSource_w7kh3")
 
-[node name="world" type="Node2D"]
+[sub_resource type="Curve2D" id="Curve2D_i7141"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -3.41255, -1.88405, 0, 0, 0, 0, 3.50809, -2.17621, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0, -3.50385, 3.9775, 0, 0, 0, 0, -3.41255, -1.88405)
+}
+point_count = 5
+
+[node name="World" type="Node2D"]
 y_sort_enabled = true
 
 [node name="TileMapLayer - Ground" type="TileMapLayer" parent="."]
@@ -81,8 +89,20 @@ tile_set = SubResource("TileSet_w7kh3")
 [node name="player" parent="." instance=ExtResource("1_nnsk1")]
 position = Vector2(0, 1)
 
-[node name="tree" parent="." instance=ExtResource("5_71j4m")]
+[node name="tree1" parent="." instance=ExtResource("5_71j4m")]
 position = Vector2(-2, 2)
 
 [node name="tree2" parent="." instance=ExtResource("5_71j4m")]
 position = Vector2(1, 1)
+
+[node name="enemy2" parent="." instance=ExtResource("7_i7141")]
+position = Vector2(2, 3)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_i7141")
+
+[node name="enemy_path_follow" parent="Path2D" instance=ExtResource("8_4mrxx")]
+position = Vector2(-3.41255, -1.88405)
+speed = 1.0

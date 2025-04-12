@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://buy87jaswwvjh"]
+
+[ext_resource type="Script" uid="uid://dq85ru7oseaku" path="res://scripts/enemy_path_follow.gd" id="1_yp4qy"]
+[ext_resource type="PackedScene" uid="uid://t8p1b2g8ai87" path="res://scenes/enemy.tscn" id="2_1gfhe"]
+
+[node name="EnemyPathFollow" type="PathFollow2D"]
+rotates = false
+cubic_interp = false
+script = ExtResource("1_yp4qy")
+
+[node name="enemy" parent="." instance=ExtResource("2_1gfhe")]
