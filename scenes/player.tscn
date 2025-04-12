@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://w6dng65fdvd"]
+
+[ext_resource type="PackedScene" uid="uid://u4pgq8hntw86" path="res://scenes/character.tscn" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://0ymdoiaqy1qd" path="res://scripts/player.gd" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://curm7rijpd3cd" path="res://assets/sprites/player/player.png" id="3_qhqgy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(0.4, 0.3)
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+resource_name = "idle_down"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
+_data = {
+&"RESET": SubResource("Animation_dqkch"),
+&"idle_down": SubResource("Animation_qhqgy")
+}
+
+[node name="Player" instance=ExtResource("1_3vyb7")]
+script = ExtResource("2_g2els")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+y_sort_enabled = true
+position = Vector2(0, -0.45)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("3_qhqgy")
+hframes = 6
+vframes = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -0.15)
+shape = SubResource("RectangleShape2D_dqkch")
+
+[node name="Animation" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_qlg0r")
+}
