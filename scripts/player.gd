@@ -10,82 +10,100 @@ var dir : Direction = Direction.Down
 
 @onready var anim : AnimationPlayer = $animation
 @onready var sprite : Sprite2D = $sprite
+@onready var hitbox : Area2D = $hitbox
 
 func _ready ():
-	anim.play("idle_down")
+	self.anim.play("idle_down")
 
 func _physics_process (delta: float) -> void:
 	var dir_vector = Vector2.ZERO
 	var moved : bool = false
 	
-	if state == State.Attack:
+	if self.state == State.Attack:
 		return
 	
 	var previous_anim = anim.get_current_animation()
 	
 	if Input.is_action_pressed("ui_left"):
 		dir_vector.x -= 1
-		anim.play("walk_right")
-		sprite.flip_h = true
+		self.anim.play("walk_right")
+		self.sprite.flip_h = true
 		moved = true
-		dir = Direction.Left
+		self.dir = Direction.Left
 	if Input.is_action_pressed("ui_right"):
 		dir_vector.x += 1
-		anim.play("walk_right")
-		sprite.flip_h = false
+		self.anim.play("walk_right")
+		self.sprite.flip_h = false
 		moved = true
-		dir = Direction.Right
+		self.dir = Direction.Right
 	if Input.is_action_pressed("ui_up"):
 		dir_vector.y -= 1
-		anim.play("walk_up")
+		self.anim.play("walk_up")
 		moved = true
-		dir = Direction.Up
+		self.dir = Direction.Up
 	if Input.is_action_pressed("ui_down"):
 		dir_vector.y += 1
-		anim.play("walk_down")
+		self.anim.play("walk_down")
 		moved = true
-		dir = Direction.Down
+		self.dir = Direction.Down
 	
 	if moved:
-		state = State.Walking
+		self.state = State.Walking
 		dir_vector = dir_vector.normalized()
 	else:
-		state = State.Idle
+		self.state = State.Idle
 		
 		match previous_anim:
 			"walk_right":
-				anim.play("idle_right")
+				self.anim.play("idle_right")
 			"walk_down":
-				anim.play("idle_down")
+				self.anim.play("idle_down")
 			"walk_up":
-				anim.play("idle_up")
+				self.anim.play("idle_up")
 
 	# Move the character
 	#position += direction * speed * dt
-	move_and_collide(dir_vector * speed * delta)
+	move_and_collide(dir_vector * self.speed * delta)
 
 func _input (event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
-		state = State.Attack
+		self.state = State.Attack
 		
 		match dir:
 			Direction.Left:
-				anim.play("attack_right")
+				self.anim.play("attack_right")
+				self.hitbox.get_node("left").disabled = false
 			Direction.Right:
-				anim.play("attack_right")
+				self.anim.play("attack_right")
+				self.hitbox.get_node("right").disabled = false
 			Direction.Down:
-				anim.play("attack_down")
+				self.anim.play("attack_down")
+				self.hitbox.get_node("down").disabled = false
 			Direction.Up:
-				anim.play("attack_up")
+				self.anim.play("attack_up")
+				self.hitbox.get_node("up").disabled = false
 
 func anim_ended_attack_right () -> void:
-	state = State.Idle
-	anim.play("idle_right")
+	self.state = State.Idle
+	self.anim.play("idle_right")
+	self.hitbox.get_node("left").disabled = true
+	self.hitbox.get_node("right").disabled = true
 
 func anim_ended_attack_down () -> void:
-	state = State.Idle
-	anim.play("idle_down")
+	self.state = State.Idle
+	self.anim.play("idle_down")
+	self.hitbox.get_node("down").disabled = true
 
 func anim_ended_attack_up () -> void:
-	state = State.Idle
-	anim.play("idle_up")
+	self.state = State.Idle
+	self.anim.play("idle_up")
+	self.hitbox.get_node("up").disabled = true
+
+func attack (enemy: Enemy) -> void:
+	enemy.receive_damage()
+
+func _on_hitbox_area_entered (area: Area2D) -> void:
+	var parent = area.get_parent()
+	
+	if parent is Enemy:
+		attack(parent)

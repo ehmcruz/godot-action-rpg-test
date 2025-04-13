@@ -6,6 +6,7 @@
 size = Vector2(0.2, 0.2)
 
 [node name="Tree" type="StaticBody2D"]
+collision_mask = 6
 
 [node name="Tree00" type="Sprite2D" parent="."]
 y_sort_enabled = true

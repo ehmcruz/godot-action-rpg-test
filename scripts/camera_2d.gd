@@ -5,7 +5,7 @@ extends Camera2D
 func _ready():
 	zoom = Vector2(Units.dist_to_px(1.0), Units.dist_to_px(1.0))
 
-func _process (delta: float) -> void:
+func _process (delta: float) -> void:	
 	if !camera_target:
 		return
 	
