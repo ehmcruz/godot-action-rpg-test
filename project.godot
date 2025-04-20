@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="action-rpg-test"
-run/main_scene="uid://cifufi1cud2bn"
+run/main_scene="uid://n7tbeeuny5df"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://assets/icon.svg"
 
@@ -34,12 +34,9 @@ attack={
 
 [layer_names]
 
-2d_physics/layer_1="world"
-2d_physics/layer_2="player"
-2d_physics/layer_3="enemy"
-2d_physics/layer_4="item"
-2d_physics/layer_7="hitbox"
-2d_physics/layer_8="hurtbox"
+2d_physics/layer_1="collider"
+2d_physics/layer_2="hitbox"
+2d_physics/layer_3="hurtbox"
 
 [rendering]
 

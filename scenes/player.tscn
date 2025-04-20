@@ -245,8 +245,6 @@ _data = {
 size = Vector2(0.5, 0.5)
 
 [node name="Player" instance=ExtResource("1_3vyb7")]
-collision_layer = 2
-collision_mask = 5
 script = ExtResource("2_g2els")
 
 [node name="sprite" type="Sprite2D" parent="." index="0"]
@@ -267,8 +265,8 @@ libraries = {
 }
 
 [node name="hitbox" type="Area2D" parent="." index="3"]
-collision_layer = 64
-collision_mask = 128
+collision_layer = 2
+collision_mask = 4
 
 [node name="down" type="CollisionShape2D" parent="hitbox" index="0"]
 position = Vector2(0, 0.25)

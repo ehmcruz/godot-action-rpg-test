@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://k170xqt1fuiq"]
+
+[ext_resource type="PackedScene" uid="uid://bqhmn6w833r2l" path="res://scenes/map_forest.tscn" id="1_rses0"]
+[ext_resource type="Script" uid="uid://ckbhyf6j6cwd1" path="res://scripts/level_forest_00.gd" id="1_xbfs2"]
+[ext_resource type="PackedScene" uid="uid://t8p1b2g8ai87" path="res://scenes/enemy.tscn" id="2_xbfs2"]
+[ext_resource type="PackedScene" uid="uid://buy87jaswwvjh" path="res://scenes/enemy_path_follow.tscn" id="3_qjrae"]
+
+[sub_resource type="Curve2D" id="Curve2D_i7141"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -3.41255, -1.88405, 0, 0, 0, 0, 3.50809, -2.17621, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0, -3.50385, 3.9775, 0, 0, 0, 0, -3.41255, -1.88405)
+}
+point_count = 5
+
+[node name="Level" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_xbfs2")
+metadata/_custom_type_script = "uid://dqj8ghymyxofc"
+
+[node name="map" parent="." instance=ExtResource("1_rses0")]
+y_sort_enabled = true
+
+[node name="enemy2" parent="." instance=ExtResource("2_xbfs2")]
+position = Vector2(2, 3)
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_i7141")
+
+[node name="enemy_path_follow" parent="Path2D" instance=ExtResource("3_qjrae")]
+position = Vector2(-3.41255, -1.88405)
+speed = 1.0
+
+[node name="player_start_pos" type="Marker2D" parent="."]
+position = Vector2(-3.68857, 3.70784)
+gizmo_extents = 5.0

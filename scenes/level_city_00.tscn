@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctocrnin3xj31"]
+
+[ext_resource type="Script" uid="uid://xl6o13ijrhdx" path="res://scripts/level_city_00.gd" id="1_1ooro"]
+[ext_resource type="PackedScene" uid="uid://uyl4055y6lnx" path="res://scenes/map_city.tscn" id="2_w07an"]
+
+[node name="Level" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_1ooro")
+
+[node name="map" parent="." instance=ExtResource("2_w07an")]
+y_sort_enabled = true
+position = Vector2(0, 0)

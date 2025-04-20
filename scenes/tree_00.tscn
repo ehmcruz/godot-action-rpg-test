@@ -1,18 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://18t321xkjcw1"]
 
-[ext_resource type="Texture2D" uid="uid://cwljvwjxdqcgh" path="res://assets/sprites/env/tree_00.png" id="1_avsvi"]
+[ext_resource type="Texture2D" uid="uid://cwljvwjxdqcgh" path="res://assets/sprites/env/tree_00.png" id="1_bnffg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_avsvi"]
 size = Vector2(0.2, 0.2)
 
 [node name="Tree" type="StaticBody2D"]
-collision_mask = 6
 
 [node name="Tree00" type="Sprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -1.2)
 scale = Vector2(0.004, 0.004)
-texture = ExtResource("1_avsvi")
+texture = ExtResource("1_bnffg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
