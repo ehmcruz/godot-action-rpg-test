@@ -27,15 +27,16 @@ var player_scene = preload("res://scenes/player.tscn")
 var world : Node2D
 var player : Player = null
 var current_level : Level = null
-var quest_manager : QuestManager = QuestManager.new()
+var root : Node2D = null
 
-func _ready () -> void:
+func init (root_: Node2D) -> void:
+	self.root = root_
 	self.player = self.player_scene.instantiate()
 	self.player.name = "player"
 
 	var world_view : Node2D = self.world_view_scene.instantiate()
 	world_view.name = "world_view"
-	self.add_child(world_view)
+	self.root.add_child(world_view)
 	
 	self.world = world_view.get_node("subviewport_container").get_node("subviewport").get_node("world")
 
@@ -49,7 +50,7 @@ func change_map (map_id: MapID) -> void:
 	var current_map_id : MapID = self.current_level.map.id
 	self.current_level.queue_free()
 
-	var next_level_id : LevelID = self.quest_manager.current_quest.level_of_map[map_id]
+	var next_level_id : LevelID = quest_manager.current_quest.level_of_map[map_id]
 	var next_level : Level = self.level_scenes[next_level_id].instantiate()
 	next_level.name = "level"
 	self.current_level = next_level
@@ -59,3 +60,19 @@ func change_map (map_id: MapID) -> void:
 	var marker : Marker2D = next_level.map.get_node(marker_name)
 	var position = marker.position
 	self.player.set_deferred("position", position)
+	
+	quest_manager.current_quest.on_level_loaded(next_level)
+
+func on_enemy_destroyed (enemy: Enemy) -> void:
+	quest_manager.current_quest.on_enemy_destroyed(enemy)
+
+func on_quest_finish () -> void:
+	var map : Map = self.current_level.get_node("map")
+	var map_id : MapID = map.id
+	self.current_level.queue_free()
+	var next_level_id : LevelID = quest_manager.current_quest.level_of_map[map_id]
+	var next_level : Level = self.level_scenes[next_level_id].instantiate()
+	next_level.name = "level"
+	self.current_level = next_level
+	self.world.add_child(self.current_level)
+	quest_manager.current_quest.on_level_loaded(next_level)

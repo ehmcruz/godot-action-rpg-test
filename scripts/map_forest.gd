@@ -6,4 +6,4 @@ func _ready () -> void:
 
 func _on_area_exits_city_body_entered (body: Node2D) -> void:
 	if body is Player:
-		self.game_manager.change_map(GameManager.MapID.City)
+		game_manager.change_map(GameManager.MapID.City)

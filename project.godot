@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="action-rpg-test"
-run/main_scene="uid://n7tbeeuny5df"
+run/main_scene="uid://dt6f0nfkuav06"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://assets/icon.svg"
 
 [autoload]
 
 Units="*res://scripts/units.gd"
+game_manager="*res://scripts/game_manager.gd"
+quest_manager="*res://scripts/quest_manager.gd"
 
 [display]
 

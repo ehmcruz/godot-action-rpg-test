@@ -15,7 +15,8 @@ func _physics_process (delta: float) -> void:
 	pass
 
 func receive_damage () -> void:
+	game_manager.on_enemy_destroyed(self)
 	if self.path:
 		self.path.queue_free()
 	else:
-		self.queue_free()	
+		self.queue_free()
