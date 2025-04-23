@@ -6,7 +6,7 @@ This is a simple test of a 2D action RPG game I am developing using Godot to lea
 
 I used Godot 4.4.1.
 
-# Main Feature
+# Main Features
 
 - Simple quest system.
 
